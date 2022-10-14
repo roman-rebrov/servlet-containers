@@ -4,15 +4,16 @@ import ru.netology.model.Post;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 // Stub
 public class PostRepository {
 
     private Map<Long, Post> repo = new ConcurrentHashMap<>();
-    private long idCounter = 1;
+    private AtomicLong idCounter = new AtomicLong(1);
 
     private synchronized long IdCreator() {
-        return this.idCounter++;
+        return this.idCounter.getAndIncrement();
     }
 
     public List<Post> all() {
